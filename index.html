@@ -120,5 +120,27 @@ footer{background:#082b17;color:#dcebdd;padding:35px 0;text-align:center;font-si
 </div>
 </footer>
 
+
+<!-- EMAGRECEPLUS_KIWIFY_FIX -->
+<script>
+document.addEventListener('click', function(e) {
+  const el = e.target.closest('a,button');
+  if (!el) return;
+
+  const href = (el.getAttribute('href') || '').trim();
+  const text = (el.textContent || '').toLowerCase();
+
+  const ehCheckout =
+    href === '#checkout' ||
+    href === checkout ||
+    /comprar|quero|garantir|começar agora|comece agora|adquirir|inscrever/.test(text);
+
+  if (ehCheckout) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    window.location.assign(checkout);
+  }
+}, true);
+</script>
 </body>
 </html>

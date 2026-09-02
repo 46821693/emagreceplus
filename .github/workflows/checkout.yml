@@ -1,0 +1,38 @@
+name: Conectar checkout Kiwify
+
+on:
+  push:
+    paths:
+      - '.github/workflows/checkout.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Conectar Kiwify
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          arquivo = Path("index.html")
+          html = arquivo.read_text(encoding="utf-8")
+
+          html = html.replace(
+              "#checkout",
+              "https://pay.kiwify.com.br/z6vEF8y"
+          )
+
+          arquivo.write_text(html, encoding="utf-8")
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Conectar checkout Kiwify"
+          git push

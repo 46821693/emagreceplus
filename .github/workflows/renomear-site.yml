@@ -1,0 +1,26 @@
+name: Preparar index.html
+
+on:
+  push:
+    paths:
+      - '.github/workflows/renomear-site.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Renomear site
+        run: |
+          if [ -f "emagrece_plus_site_vendas-9.html" ]; then
+            mv "emagrece_plus_site_vendas-9.html" "index.html"
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "Preparar index.html"
+            git push
+          fi

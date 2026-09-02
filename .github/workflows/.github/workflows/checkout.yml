@@ -1,0 +1,86 @@
+name: Conectar checkout Kiwify
+
+on:
+  push:
+    paths:
+      - '.github/workflows/checkout.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Conectar Kiwify
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          arquivo = Path("index.html")
+          html = arquivo.read_text(encoding="utf-8")
+
+          codigo = r'''
+          <style>
+            .emagrece-cta {
+              position: fixed;
+              left: 20px;
+              right: 20px;
+              bottom: 20px;
+              z-index: 99999;
+              display: block;
+              padding: 18px;
+              background: #16a34a;
+              color: white !important;
+              text-align: center;
+              font-size: 20px;
+              font-weight: bold;
+              border-radius: 14px;
+              text-decoration: none !important;
+              box-shadow: 0 6px 20px rgba(0,0,0,.25);
+            }
+          </style>
+
+          <a class="emagrece-cta"
+             href="https://pay.kiwify.com.br/z6vEF8y">
+             QUERO COMEÇAR AGORA — R$ 29,90
+          </a>
+
+          <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const checkout = "https://pay.kiwify.com.br/z6vEF8y";
+
+            document.querySelectorAll("a, button").forEach(function(el) {
+              const texto = (el.innerText || el.textContent || "").toLowerCase();
+
+              if (
+                texto.includes("comprar") ||
+                texto.includes("começar") ||
+                texto.includes("comecar") ||
+                texto.includes("quero") ||
+                texto.includes("garantir") ||
+                texto.includes("inscrever") ||
+                texto.includes("acesso")
+              ) {
+                el.addEventListener("click", function() {
+                  window.location.href = checkout;
+                });
+              }
+            });
+          });
+          </script>
+          '''
+
+          if "emagrece-cta" not in html:
+              html = html.replace("</body>", codigo + "\n</body>")
+              arquivo.write_text(html, encoding="utf-8")
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Conectar checkout Kiwify"
+          git push

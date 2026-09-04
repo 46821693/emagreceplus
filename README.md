@@ -80,7 +80,7 @@ Não são prometidos resultados específicos de perda de peso. Resultados indivi
 Pessoas com condições de saúde, gestantes, menores de idade ou pessoas que utilizam medicamentos devem buscar orientação profissional antes de realizar mudanças relevantes na alimentação ou atividade física.
 💰 Oferta
 Emagrece+ — 21 Dias para uma Rotina Mais Leve
-Preço sugerido: R$ 29,90
+Preço: R$ 29,90
 O acesso pode ser disponibilizado por uma plataforma de cursos e pagamentos, como a Kiwify.
 📞 Atendimento
 Para dúvidas sobre o programa, utilize o canal de atendimento informado na página oficial de vendas.
